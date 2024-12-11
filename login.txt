@@ -1,0 +1,32 @@
+app.secret_key = 'your_secret_key'  # Replace with a strong secret key
+
+# Placeholder for database interaction (replace with actual database code)
+def verify_employee(username, password):
+    # Code to check employee credentials in the database
+    # Return True if valid, False otherwise
+    pass
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if verify_employee(username, password):
+            session['logged_in'] = True
+            # You can also store the employee's role in the session
+            return redirect(url_for('index'))
+        else:
+            return "Invalid credentials"
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
+
+@app.route('/')
+def index():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    # Code for the main application interface
+    return render_template('index.html')

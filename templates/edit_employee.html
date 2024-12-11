@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Employee</title>
+</head>
+<body>
+  <h1>Edit Employee</h1>
+
+  <form method="POST">
+  
+    <label for="first_name">First Name:</label><br>  
+    <input type="text" id="first_name" name="first_name" value="{{ employee['first_name'] }}" required><br><br>  
+
+    <label for="last_name">Last Name:</label><br>  
+    <input type="text" id="last_name" name="last_name" value="{{ employee['last_name'] }}" required><br><br>  
+
+    <label for="phone">Phone:</label><br>  
+    <input type="text" id="phone" name="phone" value="{{ employee['phone'] }}"><br><br>  
+
+    <label for="position">Position:</label><br>  
+    <input type="text" id="position" name="position" value="{{ employee['position'] }}" required><br><br>  
+
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" value="{{ employee['username'] }}" required><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" value="{{ employee['password'] }}" required><br><br>
+
+    <input type="submit" value="Update Employee">
+  </form>
+
+  <a href="/employees">Back to Employee List</a>
+
+</body>
+</html>

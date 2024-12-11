@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Customer</title>
+</head>
+<body>
+  <h1>Edit Customer</h1>
+
+  <form method="POST">
+   
+    <label for="first_name">First Name:</label><br>  
+    <input type="text" id="first_name" name="first_name" value="{{ customer['first_name'] }}" required><br><br>  
+
+    <label for="last_name">Last Name:</label><br>  
+    <input type="text" id="last_name" name="last_name" value="{{ customer['last_name'] }}" required><br><br>  
+
+    <label for="phone">Phone:</label><br>  
+    <input type="text" id="phone" name="phone" value="{{ customer['phone'] }}"><br><br>  
+
+    <label for="address">Address:</label><br>  
+    <input type="text" id="address" name="address" value="{{ customer['address'] }}" required><br><br>  
+
+    <label for="id_card">ID Card:</label><br>  
+    <input type="text" id="id_card" name="id_card" value="{{ customer['id_card'] }}" required><br><br>  
+
+    <label for="id_card_photo">ID Card Photo:</label><br>  
+    <input type="text" id="id_card_photo" name="id_card_photo" value="{{ customer['id_card_photo'] }}" required><br><br>  
+
+    <input type="submit" value="Update Customer">
+  </form>
+
+  <a href="/customers">Back to Customer List</a>
+
+</body>
+</html>
