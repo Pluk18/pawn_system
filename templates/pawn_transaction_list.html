@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pawn Transaction List</title>
+  <script>
+    function confirmDelete(pawnTransactionId) {
+      if (confirm("Are you sure you want to delete this pawn transaction?")) {
+        document.getElementById('delete-form-' + pawnTransactionId).submit();
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Pawn Transaction List</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Pawn Transaction ID</th>
+        <th>Customer ID</th>
+        <th>Item ID</th>
+        <th>Pawn Date</th>
+        <th>Loan Amount</th>
+        <th>Interest Rate</th>
+        <th>Due Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in pawn_transactions %}
+      <tr>
+        <td>{{ transaction['PawnTransactionID'] }}</td>
+        <td>{{ transaction['CustomerID'] }}</td>
+        <td>{{ transaction['ItemID'] }}</td>
+        <td>{{ transaction['PawnDate'] }}</td>
+        <td>{{ transaction['LoanAmount'] }}</td>
+        <td>{{ transaction['InterestRate'] }}</td>
+        <td>{{ transaction['DueDate'] }}</td>
+        <td>
+          <a href="/pawn_transactions/{{ transaction['PawnTransactionID'] }}/edit">Edit</a>
+          <form id="delete-form-{{ transaction['PawnTransactionID'] }}" method="POST" action="/pawn_transactions/{{ transaction['PawnTransactionID'] }}/delete">
+            <button type="button" onclick="confirmDelete('{{ transaction['PawnTransactionID'] }}')">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="/add_pawn_transaction">Add New Pawn Transaction</a>
+
+</body>
+</html>
