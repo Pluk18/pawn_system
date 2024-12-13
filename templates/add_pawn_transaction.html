@@ -7,22 +7,29 @@
   <h1>Add Pawn Transaction</h1>
 
   <form method="POST">
-    <label for="pawn_transaction_id">Pawn Transaction ID:</label><br>
-    <input type="text" id="pawn_transaction_id" name="pawn_transaction_id" required><br><br>
-
     <label for="customer_id">Customer:</label><br>
     <select id="customer_id" name="customer_id" required>
       {% for customer in customers %}
         <option value="{{ customer['customer_id'] }}">{{ customer['first_name'] }} {{ customer['last_name'] }}</option>
       {% endfor %}
     </select><br><br>
+    <label for="item_id">Item ID:</label><br>
+    <input type="text" id="item_id" name="item_id" required><br><br>
 
-    <label for="item_id">Item:</label><br>
-    <select id="item_id" name="item_id" required>
-      {% for item in items %}
-        <option value="{{ item['ItemID'] }}">{{ item['ItemDescription'] }}</option>
-      {% endfor %}
-    </select><br><br>
+    <label for="item_description">Item Description:</label><br>
+    <input type="text" id="item_description" name="item_description" required><br><br>
+
+    <label for="type">Type:</label><br>
+    <input type="text" id="type" name="type" required><br><br>
+
+    <label for="weight">Weight (grams):</label><br>
+    <input type="number" id="weight" name="weight" required><br><br>
+
+    <label for="estimated_value">Estimated Value:</label><br>
+    <input type="number" id="estimated_value" name="estimated_value" required><br><br>
+
+    <label for="item_photos">Item Photos:</label><br>
+    <input type="file" id="item_photos" name="item_photos" multiple><br><br>
 
     <label for="pawn_date">Pawn Date:</label><br>
     <input type="date" id="pawn_date" name="pawn_date" required><br><br>

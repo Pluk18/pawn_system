@@ -34,23 +34,24 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS items (
     ItemID TEXT PRIMARY KEY,
-    ItemDescription TEXT NOT NULL
+    ItemDescription TEXT NOT NULL,
+    Type TEXT NOT NULL,
+    Weight REAL NOT NULL,
+    EstimatedValue REAL NOT NULL,
+    ItemPhotos TEXT  -- Store file paths or URLs of uploaded photos
 );
 ''')
 
 # Create the pawn transactions table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS pawn_transactions (
-    PawnTransactionID TEXT PRIMARY KEY,
+    PawnTransactionID TEXT PRIMARY KEY AUTOINCREMENT,
     CustomerID TEXT NOT NULL,
     ItemID TEXT NOT NULL,
     PawnDate DATE NOT NULL,
     LoanAmount REAL NOT NULL,
     InterestRate REAL NOT NULL,
-    DueDate DATE NOT NULL,
-    -- Add other relevant fields as needed
-    FOREIGN KEY (CustomerID) REFERENCES customers (CustomerID),
-    FOREIGN KEY (ItemID) REFERENCES items (ItemID)
+    DueDate DATE NOT NULL
 );
 ''')
 
@@ -81,13 +82,16 @@ def get_db_connection():
 def add_pawn_transaction():
     conn = get_db_connection()
     customers = conn.execute('SELECT customer_id, first_name, last_name FROM customers').fetchall()
-    items = conn.execute('SELECT ItemID, ItemDescription FROM items').fetchall()
     conn.close()
 
     if request.method == 'POST':
-        pawn_transaction_id = request.form['pawn_transaction_id']
+        
         customer_id = request.form['customer_id']
         item_id = request.form['item_id']
+        item_description = request.form['item_description']
+        type = request.form['type']  # New field
+        weight = request.form['weight']  # New field
+        estimated_value = request.form['estimated_value']  # New field
         pawn_date = request.form['pawn_date']
         loan_amount = request.form['loan_amount']
         interest_rate = request.form['interest_rate']
@@ -95,14 +99,18 @@ def add_pawn_transaction():
 
         conn = get_db_connection()
         conn.execute(
-            'INSERT INTO pawn_transactions (PawnTransactionID, CustomerID, ItemID, PawnDate, LoanAmount, InterestRate, DueDate) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            (pawn_transaction_id, customer_id, item_id, pawn_date, loan_amount, interest_rate, due_date)
+            'INSERT INTO pawn_transactions (CustomerID, ItemID, PawnDate, LoanAmount, InterestRate, DueDate) VALUES (?, ?, ?, ?, ?, ?)',
+            (customer_id, item_id, pawn_date, loan_amount, interest_rate, due_date)
         )
+        # conn.execute(
+        #     'INSERT INTO items (ItemID, ItemDescription, Type, Weight, EstimatedValue) VALUES (?, ?, ?, ?, ?)',
+        #     (item_id, item_description, type, weight, estimated_value)
+        # )
         conn.commit()
         conn.close()
         return redirect(url_for('pawn_transaction_list'))
 
-    return render_template('add_pawn_transaction.html', customers=customers, items=items)
+    return render_template('add_pawn_transaction.html', customers=customers)
 
 @app.route('/pawn_transactions')
 def pawn_transaction_list():
