@@ -25,6 +25,7 @@ cursor.execute('''
     last_name TEXT NOT NULL,
     phone TEXT,
     position TEXT NOT NULL,
+    salary INTEGER,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
@@ -242,13 +243,14 @@ def add_employee():
         last_name = request.form['last_name']  # New field
         phone = request.form['phone']  # New field
         position = request.form['position']  # New field
+        salary = request.form['salary']
         username = request.form['username']
         password = request.form['password']  # In a real app, hash the password!
 
         conn = get_db_connection()
         conn.execute(
-            'INSERT INTO employees (first_name, last_name, phone, position, username, password) VALUES ( ?, ?, ?, ?, ?, ?)',
-            ( first_name, last_name, phone, position, username, password)
+            'INSERT INTO employees (first_name, last_name, phone, position, salary, username, password) VALUES ( ?, ?, ?, ?, ?, ?, ?)',
+            ( first_name, last_name, phone, position, salary, username, password)
         )
         conn.commit()
         conn.close()

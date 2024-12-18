@@ -21,6 +21,7 @@
         <th>Last Name</th>  
         <th>Phone</th>  
         <th>Position</th>  
+        <th>Salary</th>  
         <th>Actions</th>
       </tr>
     </thead>
@@ -31,7 +32,8 @@
         <td>{{ employee['first_name'] }}</td>  
         <td>{{ employee['last_name'] }}</td>  
         <td>{{ employee['phone'] }}</td>  
-        <td>{{ employee['position'] }}</td>  
+        <td>{{ employee['position'] }}</td>
+        <td>{{ employee['salary'] }}</td>    
         <td>
           <a href="/employees/{{ employee['employee_id'] }}/edit">Edit</a> 
           <form id="delete-form-{{ employee['employee_id'] }}" method="POST" action="/employees/{{ employee['employee_id'] }}/delete">  
